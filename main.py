@@ -2040,70 +2040,127 @@
 #         return res
 
 
-
-#hello-git
-#HELO VS code git
-
-
-#mikheev_loh
+# hello-git
+# HELO VS code git
 
 
+# mikheev_loh
 
-class ListMath:
-    def __init__(self, lst=None):
-        self.lst_math = lst if lst and type(lst) == list else []
-        self.lst_math = list(filter(lambda x: type(x) in (int, float), self.lst_math))
 
-    @staticmethod
-    def __verify_value(value):
-        if type(value) not in (int, float):
-            raise ArithmeticError('xyu')
+# class ListMath:
+#     def __init__(self, lst=None):
+#         self.lst_math = lst if lst and type(lst) == list else []
+#         self.lst_math = list(filter(lambda x: type(x) in (int, float), self.lst_math))
+#
+#     @staticmethod
+#     def __verify_value(value):
+#         if type(value) not in (int, float):
+#             raise ArithmeticError('xyu')
+#
+#     def __add__(self, other):
+#         self.__verify_value(other)
+#         return ListMath([x + other for x in self.lst_math])
+#
+#     def __radd__(self, other):
+#         return self + other
+#
+#     def __sub__(self, other):
+#         self.__verify_value(other)
+#         return ListMath([x - other for x in self.lst_math])
+#
+#     def __rsub__(self, other):
+#         return ListMath([other - x for x in self.lst_math])
+#
+#     def __mul__(self, other):
+#         self.__verify_value(other)
+#         return ListMath([x * other for x in self.lst_math])
+#
+#     def __rmul__(self, other):
+#         return self * other
+#
+#     def __truediv__(self, other):
+#         self.__verify_value(other)
+#         return ListMath([x / other for x in self.lst_math])
+#
+#     def __rtruediv__(self, other):
+#         return ListMath([other / x for x in self.lst_math])
+#
+#     def __iadd__(self, other):
+#         self.__verify_value(other)
+#         self.lst_math = [x + other for x in self.lst_math]
+#         return self
+#
+#     def __isub__(self, other):
+#         self.__verify_value(other)
+#         self.lst_math = [x - other for x in self.lst_math]
+#         return self
+#
+#     def __imul__(self, other):
+#         self.__verify_value(other)
+#         self.lst_math = [x * other for x in self.lst_math]
+#         return self
+#
+#     def __itruediv__(self, other):
+#         self.__verify_value(other)
+#         self.lst_math = [x / other for x in self.lst_math]
+#         return self
+
+
+class StackObj:
+    def __init__(self, data):
+        self.__data = data
+        self.__next = None
+
+    @property
+    def data(self):
+        return self.__data
+
+    @property
+    def next(self):
+        return self.__next
+
+    @next.setter
+    def next(self, obj):
+        self.__next = obj
+
+
+class Stack:
+    def __init__(self):
+        self.top = None
+        self.__last = None
+
+    def push_back(self, obj):
+        if self.__last:
+            self.__last.next = obj
+        self.__last = obj
+
+        if self.top is None:
+            self.top = obj
+
+    def pop_back(self):
+        h = self.top
+        if h is None:
+            return
+        while h.next and h.next != self.__last:
+            h = h.next
+
+        if self.top == self.__last:
+            self.top = self.__last = None
+        else:
+            h.next = None
+            self.__last = h
 
     def __add__(self, other):
-        self.__verify_value(other)
-        return ListMath([x + other for x in self.lst_math])
-
-    def __radd__(self, other):
-        return self + other
-
-    def __sub__(self, other):
-        self.__verify_value(other)
-        return ListMath([x - other for x in self.lst_math])
-
-    def __rsub__(self, other):
-        return ListMath([other - x for x in self.lst_math])
-
-    def __mul__(self, other):
-        self.__verify_value(other)
-        return ListMath([x * other for x in self.lst_math])
-
-    def __rmul__(self, other):
-        return self * other
-
-    def __truediv__(self, other)
-        self.__verify_value(other)
-        return ListMath([x / other for x in self.lst_math])
-
-    def __rtruediv__(self, other):
-        return ListMath([other / x for x in self.lst_math])
-
-    def __iadd__(self, other):
-        self.__verify_value(other)
-        self.lst_math = [x + other for x in self.lst_math]
+        self.push_back(other)
         return self
 
-    def __isub__(self, other):
-        self.__verify_value(other)
-        self.lst_math = [x - other for x in self.lst_math]
+    def __iadd__(self, other):
+        return self.__add__(other)
+
+    def __mul__(self, other):
+        for x in other:
+            self.push_back(StackObj(x))
         return self
 
     def __imul__(self, other):
-        self.__verify_value(other)
-        self.lst_math = [x * other for x in self.lst_math]
-        return self
-    
-    def __itruediv__(self, other):
-        self.__verify_value(other)
-        self.lst_math = [x / other for x in self.lst_math]
-        return self
-
+        return self.__mul__(other)
