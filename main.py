@@ -2056,7 +2056,7 @@ class ListMath:
 
     @staticmethod
     def __verify_value(value):
-        if type(other) not in (int, float):
+        if type(value) not in (int, float):
             raise ArithmeticError('xyu')
 
     def __add__(self, other):
@@ -2106,4 +2106,4 @@ class ListMath:
         self.__verify_value(other)
         self.lst_math = [x / other for x in self.lst_math]
         return self
-    
+
