@@ -8,5 +8,9 @@ class Hellow_world:
     def get_name(self) -> str:
         print(self.name)
 
+
 test = Hellow_world('Hello!')
 test.get_name()
+test.get_name()
+
+
