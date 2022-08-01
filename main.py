@@ -2105,62 +2105,180 @@
 #         self.lst_math = [x / other for x in self.lst_math]
 #         return self
 
+#
+# class StackObj:
+#     def __init__(self, data):
+#         self.__data = data
+#         self.__next = None
+#
+#     @property
+#     def data(self):
+#         return self.__data
+#
+#     @property
+#     def next(self):
+#         return self.__next
+#
+#     @next.setter
+#     def next(self, obj):
+#         self.__next = obj
+#
+#
+# class Stack:
+#     def __init__(self):
+#         self.top = None
+#         self.__last = None
+#
+#     def push_back(self, obj):
+#         if self.__last:
+#             self.__last.next = obj
+#         self.__last = obj
+#
+#         if self.top is None:
+#             self.top = obj
+#
+#     def pop_back(self):
+#         h = self.top
+#         if h is None:
+#             return
+#         while h.next and h.next != self.__last:
+#             h = h.next
+#
+#         if self.top == self.__last:
+#             self.top = self.__last = None
+#         else:
+#             h.next = None
+#             self.__last = h
+#
+#     def __add__(self, other):
+#         self.push_back(other)
+#         return self
+#
+#     def __iadd__(self, other):
+#         return self.__add__(other)
+#
+#     def __mul__(self, other):
+#         for x in other:
+#             self.push_back(StackObj(x))
+#         return self
+#
+#     def __imul__(self, other):
+#         return self.__mul__(other)
 
-class StackObj:
-    def __init__(self, data):
-        self.__data = data
-        self.__next = None
 
-    @property
-    def data(self):
-        return self.__data
+# class Clock:
+#     __DAY = 86400
+#
+#     def __init__(self, seconds: int):
+#         if not isinstance(seconds, int):
+#             raise TypeError("Seconds to be int")
+#         self.seconds = seconds % self.__DAY
+#
+#     def get_time(self):
+#         s = self.seconds % 60
+#         m = (self.seconds // 60) % 60
+#         h = (self.seconds // 3600) % 24
+#         return f"{self.__get_formated(h)}:{self.__get_formated(m)}:{self.__get_formated(s)}"
+#
+#     @classmethod
+#     def __get_formated(cls, x):
+#         return str(x).rjust(2, "0")
+#
+#     def __add__(self, other):
+#         if not isinstance(other, (int, Clock)):
+#             raise ArithmeticError("cod 002")
+#
+#         sc = other
+#         if isinstance(other, Clock):
+#             sc = other.seconds
+#
+#         return Clock(self.seconds + sc)
+#
+#     def __radd__(self, other):
+#         return self + other
+#
+#     def __iadd__(self, other):
+#         print('---iadd')
+#         if not isinstance(other, (int, Clock)):
+#             raise ArithmeticError('code 2')
+#         sc = other
+#         if isinstance(other, Clock):
+#             sc = other.seconds
+#
+#         self.seconds += sc
+#         return self
+#
+#
+# c1 = Clock(1000)
+# c1 = 100 + c1
+# c1 += 100
+# print(c1.get_time())
 
-    @property
-    def next(self):
-        return self.__next
-
-    @next.setter
-    def next(self, obj):
-        self.__next = obj
 
 
-class Stack:
-    def __init__(self):
-        self.top = None
-        self.__last = None
 
-    def push_back(self, obj):
-        if self.__last:
-            self.__last.next = obj
-        self.__last = obj
-
-        if self.top is None:
-            self.top = obj
-
-    def pop_back(self):
-        h = self.top
-        if h is None:
-            return
-        while h.next and h.next != self.__last:
-            h = h.next
-
-        if self.top == self.__last:
-            self.top = self.__last = None
-        else:
-            h.next = None
-            self.__last = h
-
-    def __add__(self, other):
-        self.push_back(other)
-        return self
-
-    def __iadd__(self, other):
-        return self.__add__(other)
-
-    def __mul__(self, other):
-        for x in other:
-            self.push_back(StackObj(x))
-        return self
-
-    def __imul__(self, other):
-        return self.__mul__(other)
+# #Zadanie 3.4.8
+#
+# class Book:
+#     def __init__(self, title, author, year):
+#         self.title = title
+#         self.author = author
+#         self.year = year
+#
+#
+# class Lib:
+#     def __init__(self):
+#         self.book_list = []
+#
+#     def __add__(self, other):
+#         if not isinstance(other, Book):
+#             raise ArithmeticError('cod 001')
+#
+#         self.book_list.append(other)
+#         return self
+#
+#     def __iadd__(self, other):
+#         return self + other
+#
+#     def __sub__(self, other):
+#         if isinstance(other, Book):
+#             self.book_list.remove(other)
+#             return self
+#         if isinstance(other, int):
+#             if len(self.book_list) >= other:
+#                 self.book_list.pop(other)
+#             else:
+#                 raise IndexError("В списке нет такого индекса")
+#             return self
+#
+#     def __isub__(self, other):
+#         if isinstance(other, Book):
+#             if other in self.book_list:
+#                 self.book_list.remove(other)
+#                 return self
+#             else:
+#                 print("Список пустой")
+#         if isinstance(other, int):
+#             if len(self.book_list) >= other:
+#                 self.book_list.pop(other)
+#             else:
+#                 raise IndexError("В списке нет такого индекса")
+#             return self
+#
+#     def __len__(self):
+#         return len(self.book_list)
+#
+#
+# book = Book("Clear member", "Mark Zalupsk", 2010)
+# book2 = Book("Clear member2", "Mark Zalupsk2", 2015)
+# book3 = Book("Clear member23", "Mark Zalupsk2", 2015)
+# lib = Lib()
+# lib += book
+# lib += book2
+# lib += book3
+# print(lib.book_list)
+#
+# lib -= book
+# print(lib.book_list)
+# lib -= 1
+# print(lib.book_list)
