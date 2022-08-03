@@ -100,57 +100,120 @@
 
 
 # zadaniye 3.5.3
-class Track:
-    def __init__(self, start_x=0, start_y=0):
-        self.start_x = start_x
-        self.start_y = start_y
-        self.__list_Track = []
+# class Track:
+#     def __init__(self, start_x=0, start_y=0):
+#         self.start_x = start_x
+#         self.start_y = start_y
+#         self.__list_Track = []
+#
+#     def add_track(self, tr):
+#         self.__list_Track.append(tr)
+#
+#     def get_tracks(self):
+#         return tuple(self.__list_Track)
+#
+#     def __eq__(self, other):
+#         return len(self) == len(other)
+#
+#     def __lt__(self, other):
+#         return len(self) < len(other)
+#
+#     def __len__(self):
+#         len_1 = ((self.start_x - self.__list_Track[0].x) ** 2 + (self.start_y - self.__list_Track[0].y) ** 2) ** 0.5
+#         return int(len_1 + sum(self.__get_lenght(i) for i in range(1, len(self.__list_Track))))
+#
+#     def __get_lenght(self, i):
+#         return ((self.__list_Track[i-1].x - self.__list_Track[i].x) ** 2 + (self.__list_Track[i-1].y - self.__list_Track[i].y) ** 2) ** 0.5
+#
+#
+#
+# class TrackLine:
+#     def __init__(self, to_x, to_y, max_speed):
+#         self.to_x = to_x
+#         self.to_y = to_y
+#         self._max_speed = max_speed
+#
+#     @property
+#     def x(self):
+#         return self.to_x
+#
+#     @property
+#     def y(self):
+#         return self.to_y
+#
+#     @property
+#     def max_speed(self):
+#         return self._max_speed
+#
+#
+#
+# track1, track2 = Track(), Track(0, 1)
+# track1.add_track(TrackLine(2, 4, 100))
+# track1.add_track(TrackLine(5, -4, 100))
+# track2.add_track(TrackLine(3, 2, 90))
+# track2.add_track(TrackLine(10, 8, 90))
+# print(len(track1), len(track2))
+# res_eq = track1 == track2
 
-    def add_track(self, tr):
-        self.__list_Track.append(tr)
 
-    def get_tracks(self):
-        return tuple(self.__list_Track)
+# zadaniye 3.5.4
+class Dimensions:
+    MIN_DIMENSION = 10
+    MAX_DIMENSION = 10000
 
-    def __eq__(self, other):
-        return len(self) == len(other)
+    def __init__(self, a, b, c):
+        self.__a = a
+        self.__b = b
+        self.__c = c
 
-    def __lt__(self, other):
-        return len(self) < len(other)
-
-    def __len__(self):
-        len_1 = ((self.start_x - self.__list_Track[0].x) ** 2 + (self.start_y - self.__list_Track[0].y) ** 2) ** 0.5
-        return int(len_1 + sum(self.__get_lenght(i) for i in range(1, len(self.__list_Track))))
-
-    def __get_lenght(self, i):
-        return ((self.__list_Track[i-1].x - self.__list_Track[i].x) ** 2 + (self.__list_Track[i-1].y - self.__list_Track[i].y) ** 2) ** 0.5
-
-
-
-class TrackLine:
-    def __init__(self, to_x, to_y, max_speed):
-        self.to_x = to_x
-        self.to_y = to_y
-        self._max_speed = max_speed
+    @classmethod
+    def __check_value(cls, value):
+        return cls.MAX_DIMENSION >= value >= cls.MIN_DIMENSION
 
     @property
-    def x(self):
-        return self.to_x
+    def a(self):
+        return self.__a
+
+    @a.setter
+    def a(self, value):
+        if self.__check_value(value):
+            self.__a = value
 
     @property
-    def y(self):
-        return self.to_y
+    def b(self):
+        return self.__b
+
+    @b.setter
+    def b(self, value):
+        if self.__check_value(value):
+            self.__b = value
 
     @property
-    def max_speed(self):
-        return self._max_speed
+    def c(self):
+        return self.__c
+
+    @c.setter
+    def c(self, value):
+        if self.__check_value(value):
+            self.__c = value
+
+    def __ge__(self, other):
+        return self.__a * self.__b * self.__c >= other.__a * other.__b * other.__c
+
+    def __gt__(self, other):
+        return self.__a * self.__b * self.__c >= other.__a * other.__b * other.__c
 
 
+class ShopItem:
+    def __init__(self, name, price, dim):
+        self.name = name
+        self.price = price
+        self.dim = dim
 
-track1, track2 = Track(), Track(0, 1)
-track1.add_track(TrackLine(2, 4, 100))
-track1.add_track(TrackLine(5, -4, 100))
-track2.add_track(TrackLine(3, 2, 90))
-track2.add_track(TrackLine(10, 8, 90))
-print(len(track1), len(track2))
-res_eq = track1 == track2
+
+trainers = ShopItem('кеды', 1024, Dimensions(40, 30, 120))
+umbrella = ShopItem('зонт', 500.24, Dimensions(10, 20, 50))
+fridge = ShopItem('холодильник', 40000, Dimensions(2000, 600, 500))
+chair = ShopItem('табуретка', 2000.99, Dimensions(500, 200, 200))
+lst_shop = [trainers, umbrella, fridge, chair]
+lst_shop_sorted = sorted(lst_shop, key=lambda x: x.dim)
