@@ -157,63 +157,115 @@
 
 
 # zadaniye 3.5.4
-class Dimensions:
-    MIN_DIMENSION = 10
-    MAX_DIMENSION = 10000
+# class Dimensions:
+#     MIN_DIMENSION = 10
+#     MAX_DIMENSION = 10000
+#
+#     def __init__(self, a, b, c):
+#         self.__a = a
+#         self.__b = b
+#         self.__c = c
+#
+#     @classmethod
+#     def __check_value(cls, value):
+#         return cls.MAX_DIMENSION >= value >= cls.MIN_DIMENSION
+#
+#     @property
+#     def a(self):
+#         return self.__a
+#
+#     @a.setter
+#     def a(self, value):
+#         if self.__check_value(value):
+#             self.__a = value
+#
+#     @property
+#     def b(self):
+#         return self.__b
+#
+#     @b.setter
+#     def b(self, value):
+#         if self.__check_value(value):
+#             self.__b = value
+#
+#     @property
+#     def c(self):
+#         return self.__c
+#
+#     @c.setter
+#     def c(self, value):
+#         if self.__check_value(value):
+#             self.__c = value
+#
+#     def __ge__(self, other):
+#         return self.__a * self.__b * self.__c >= other.__a * other.__b * other.__c
+#
+#     def __gt__(self, other):
+#         return self.__a * self.__b * self.__c >= other.__a * other.__b * other.__c
+#
+#
+# class ShopItem:
+#     def __init__(self, name, price, dim):
+#         self.name = name
+#         self.price = price
+#         self.dim = dim
+#
+#
+# trainers = ShopItem('кеды', 1024, Dimensions(40, 30, 120))
+# umbrella = ShopItem('зонт', 500.24, Dimensions(10, 20, 50))
+# fridge = ShopItem('холодильник', 40000, Dimensions(2000, 600, 500))
+# chair = ShopItem('табуретка', 2000.99, Dimensions(500, 200, 200))
+# lst_shop = [trainers, umbrella, fridge, chair]
+# lst_shop_sorted = sorted(lst_shop, key=lambda x: x.dim)
 
-    def __init__(self, a, b, c):
-        self.__a = a
-        self.__b = b
-        self.__c = c
-
-    @classmethod
-    def __check_value(cls, value):
-        return cls.MAX_DIMENSION >= value >= cls.MIN_DIMENSION
-
-    @property
-    def a(self):
-        return self.__a
-
-    @a.setter
-    def a(self, value):
-        if self.__check_value(value):
-            self.__a = value
-
-    @property
-    def b(self):
-        return self.__b
-
-    @b.setter
-    def b(self, value):
-        if self.__check_value(value):
-            self.__b = value
-
-    @property
-    def c(self):
-        return self.__c
-
-    @c.setter
-    def c(self, value):
-        if self.__check_value(value):
-            self.__c = value
-
-    def __ge__(self, other):
-        return self.__a * self.__b * self.__c >= other.__a * other.__b * other.__c
-
-    def __gt__(self, other):
-        return self.__a * self.__b * self.__c >= other.__a * other.__b * other.__c
 
 
+#zadaniye 3.6.4
+# class Rect:
+#     def __init__(self, x, y, width, height):
+#         self.x = x
+#         self.y = y
+#         self.width = width
+#         self.height = height
+#
+#     def __eq__(self, other):
+#         return self.width == other.width and self.height == other.height
+#
+#     def __hash__(self):
+#         return hash((self.width, self.height))
+#
+#
+# r1 = Rect(10, 5, 100, 50)
+# r2 = Rect(-10, 4, 100, 50)
+#
+# h1, h2 = hash(r1), hash(r2)   # h1 == h2
+# print(h1, h2)
+
+
+
+#zadaniye 3.6.5
 class ShopItem:
-    def __init__(self, name, price, dim):
+    def __init__(self, name, weight, price):
         self.name = name
+        self.weight = weight
         self.price = price
-        self.dim = dim
+
+    def __hash__(self):
+        return hash((self.name.lower(), self.weight, self.price))
+
+    def __eq__(self, other):
+        return self.name.lower() == other.name.lower() and self.weight == other.weight and self.price == other.price
 
 
-trainers = ShopItem('кеды', 1024, Dimensions(40, 30, 120))
-umbrella = ShopItem('зонт', 500.24, Dimensions(10, 20, 50))
-fridge = ShopItem('холодильник', 40000, Dimensions(2000, 600, 500))
-chair = ShopItem('табуретка', 2000.99, Dimensions(500, 200, 200))
-lst_shop = [trainers, umbrella, fridge, chair]
-lst_shop_sorted = sorted(lst_shop, key=lambda x: x.dim)
+lst_in = ["Системный блок: 1500 75890.56", "Монитор Samsung: 2000 34000", "Клавиатура: 200.44 545", "Монитор Samsung: 2000 34000"]
+shop_items = {}
+
+list_total = []
+for i in lst_in:
+    obj = ShopItem(i.split(":")[0], i.split(":")[-1].strip().split(" ")[0], i.split(":")[-1].strip().split(" ")[1])
+    list_total.append(obj)
+    total = [i.split(":")[0] for i in lst_in]
+    shop_items[obj] = [obj, total.count(obj.name)]
+    obj = None
+
+print(shop_items)
