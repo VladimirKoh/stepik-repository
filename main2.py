@@ -219,8 +219,7 @@
 # lst_shop_sorted = sorted(lst_shop, key=lambda x: x.dim)
 
 
-
-#zadaniye 3.6.4
+# zadaniye 3.6.4
 # class Rect:
 #     def __init__(self, x, y, width, height):
 #         self.x = x
@@ -242,30 +241,83 @@
 # print(h1, h2)
 
 
+# zadaniye 3.6.5
+# class ShopItem:
+#     def __init__(self, name, weight, price):
+#         self.name = name
+#         self.weight = weight
+#         self.price = price
+#
+#     def __hash__(self):
+#         return hash((self.name.lower(), self.weight, self.price))
+#
+#     def __eq__(self, other):
+#         return self.name.lower() == other.name.lower() and self.weight == other.weight and self.price == other.price
+#
+#
+# lst_in = ["Системный блок: 1500 75890.56", "Монитор Samsung: 2000 34000", "Клавиатура: 200.44 545", "Монитор Samsung: 2000 34000"]
+# shop_items = {}
+#
+# list_total = []
+# for i in lst_in:
+#     obj = ShopItem(i.split(":")[0], i.split(":")[-1].strip().split(" ")[0], i.split(":")[-1].strip().split(" ")[1])
+#     list_total.append(obj)
+#     total = [i.split(":")[0] for i in lst_in]
+#     shop_items[obj] = [obj, total.count(obj.name)]
+#     obj = None
+#
+# print(shop_items)
 
-#zadaniye 3.6.5
-class ShopItem:
-    def __init__(self, name, weight, price):
+
+# zadaniye 3.6.9
+# import ast
+#
+#
+# class Dimensions:
+#     def __init__(self, a, b, c):
+#         if self.__check_value(a):
+#             self.a = a
+#         if self.__check_value(b):
+#             self.b = b
+#         if self.__check_value(c):
+#             self.c = c
+#
+#     def __hash__(self):
+#         return hash((self.a, self.b, self.c))
+#
+#     def __eq__(self, other):
+#         return self.a == other.a and self.b == other.b and self.c == other.c
+#
+#     def __gt__(self, other):
+#         return hash((self.a, self.b, self.c)) > hash((other.a, other.b, other.c))
+#
+#     @classmethod
+#     def __check_value(cls, value):
+#         if value < 0:
+#             raise ValueError("габаритные размеры должны быть положительными числами")
+#
+#
+# lst_dims = []
+# for i in input().split(";"):
+#     coord = i.strip().split()
+#     lst_dims.append(Dimensions(ast.literal_eval(coord[0]), ast.literal_eval(coord[1]), ast.literal_eval(coord[2])))
+#
+# lst_dims = sorted(lst_dims, key=lambda x: hash(x))
+
+
+#zadaniye 3.7.3
+class Player:
+    def __init__(self, name, old, score):
         self.name = name
-        self.weight = weight
-        self.price = price
+        self.old = old
+        self.score = score
 
-    def __hash__(self):
-        return hash((self.name.lower(), self.weight, self.price))
-
-    def __eq__(self, other):
-        return self.name.lower() == other.name.lower() and self.weight == other.weight and self.price == other.price
+    def __bool__(self):
+        return self.score > 0
 
 
-lst_in = ["Системный блок: 1500 75890.56", "Монитор Samsung: 2000 34000", "Клавиатура: 200.44 545", "Монитор Samsung: 2000 34000"]
-shop_items = {}
-
-list_total = []
-for i in lst_in:
-    obj = ShopItem(i.split(":")[0], i.split(":")[-1].strip().split(" ")[0], i.split(":")[-1].strip().split(" ")[1])
-    list_total.append(obj)
-    total = [i.split(":")[0] for i in lst_in]
-    shop_items[obj] = [obj, total.count(obj.name)]
-    obj = None
-
-print(shop_items)
+players = []
+lst_xyu = [i.strip().split(";") for i in lst_in]
+for i in lst_xyu:
+    players.append(Player(i[0], int(i[1]), int(i[2])))
+players_filtered = list(filter(bool, players))
