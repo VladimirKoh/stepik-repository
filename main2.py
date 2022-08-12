@@ -306,18 +306,80 @@
 
 
 #zadaniye 3.7.3
-class Player:
-    def __init__(self, name, old, score):
-        self.name = name
+# class Player:
+#     def __init__(self, name, old, score):
+#         self.name = name
+#         self.old = old
+#         self.score = score
+#
+#     def __bool__(self):
+#         return self.score > 0
+#
+#
+# players = []
+# lst_xyu = [i.strip().split(";") for i in lst_in]
+# for i in lst_xyu:
+#     players.append(Player(i[0], int(i[1]), int(i[2])))
+# players_filtered = list(filter(bool, players))
+
+
+#zadaniye 3.8.2
+# class Record:
+#     def __init__(self, **kwargs):
+#         self.__dict__.update(kwargs)
+#         self.__total_attrs = len(kwargs)
+#         self.__attrs = tuple(self.__dict__.keys())
+#
+#     def __ckeck_index(self, index):
+#         if type(index) != int or not (-self.__total_attrs <= index < self.__total_attrs):
+#             raise IndexError('неверный индекс поля')
+#
+#
+#     def __getitem__(self, item):
+#         self.__ckeck_index(item)
+#         return getattr(self, self.__attrs[item])
+#
+#     def __setitem__(self, key, value):
+#         self.__ckeck_index(key)
+#         setattr(self, self.__attrs[key], value)
+
+# class Track:
+#     def __init__(self, start_x, start_y):
+#         self.start_x = start_x
+#         self.start_y = start_y
+#         self.points = []
+#
+#     def add_point(self, x, y, speed):
+#         self.points.append([x, y, speed])
+#
+#     def __getitem__(self, item):
+#         return (self.points[item][0], self.points[item][1]), self.points[item][-1]
+#
+#     def __setitem__(self, key, value):
+#         self.points[key][-1] = value
+#
+#
+#
+#
+#
+# tr = Track(10, -5.4)
+# tr.add_point(20, 0, 100) # первый линейный сегмент: indx = 0
+# tr.add_point(50, -20, 80) # второй линейный сегмент: indx = 1
+# tr.add_point(63.45, 1.24, 60.34) # третий линейный сегмент: indx = 2
+#
+# tr[2] = 60
+# c, s = tr[2]
+# print(c, s)
+class Person:
+    def __init__(self, fio, job, old, salary, year_job):
+        self.fio = fio
+        self.job = job
         self.old = old
-        self.score = score
+        self.salary = salary
+        self.year_job = year_job
 
-    def __bool__(self):
-        return self.score > 0
+    def __getitem__(self, item):
+        return self.__dict__[item]
 
-
-players = []
-lst_xyu = [i.strip().split(";") for i in lst_in]
-for i in lst_xyu:
-    players.append(Player(i[0], int(i[1]), int(i[2])))
-players_filtered = list(filter(bool, players))
+pers = Person('Гейтс Б.', 'бизнесмен', 61, 1000000, 46)
+print(pers.__dict__)
