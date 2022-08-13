@@ -370,16 +370,78 @@
 # tr[2] = 60
 # c, s = tr[2]
 # print(c, s)
-class Person:
-    def __init__(self, fio, job, old, salary, year_job):
-        self.fio = fio
-        self.job = job
-        self.old = old
-        self.salary = salary
-        self.year_job = year_job
+# class Person:
+#     def __init__(self, fio, job, old, salary, year_job):
+#         self.fio = fio
+#         self.job = job
+#         self.old = old
+#         self.salary = salary
+#         self.year_job = year_job
+#         self._attrs = tuple(self.__dict__)
+#         self._len_attrs = len(self._attrs)
+#         self._iter_index = -1
+#
+#     @staticmethod
+#     def __check_index(index):
+#         if index < 0 or index > 4:
+#             raise IndexError('неверный индекс')
+#
+#     def __getitem__(self, item):
+#         self.__check_index(item)
+#         return self.__dict__[self._attrs[item]]
+#
+#     def __setitem__(self, key, value):
+#         self.__dict__[self._attrs[key]] = value
+#
+#     def __iter__(self):
+#         self._iter_index = -1
+#         return self
+#
+#     def __next__(self):
+#         if self._iter_index < self._len_attrs - 1:
+#             self._iter_index += 1
+#             return getattr(self, self._attrs[self._iter_index])
+#         raise StopIteration
+#
+#
+# pers = Person('Гейтс Б.', 'бизнесмен', 61, 1000000, 46)
+# pers[0] = 'Балакирев С.М.'
+# for v in pers:
+#     print(v)
 
-    def __getitem__(self, item):
-        return self.__dict__[item]
 
-pers = Person('Гейтс Б.', 'бизнесмен', 61, 1000000, 46)
-print(pers.__dict__)
+
+#zadaniye 3.9.6
+# class TriangleListIterator:
+#     def __init__(self, lst):
+#         self._lst = lst
+#
+#     def __iter__(self):
+#         for i in range(len(self._lst)):
+#             for j in range(i+1):
+#                 yield self._lst[i][j]
+
+
+
+
+class FRange:
+    def __init__(self, start=0.0, stop=0.0, step=1.0):
+        self.start = start
+        self.stop = stop
+        self.step = step
+        self.value = self.start - self.step
+
+    def __next__(self):
+        if self.value + self.step < self.stop:
+            self.value += self.step
+            return self.value
+        else:
+            raise StopIteration
+
+
+fr = FRange(0, 5, 1)
+print(fr.__next__())
+print(fr.__next__())
+print(fr.__next__())
+print(fr.__next__())
+print(fr.__next__())
