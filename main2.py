@@ -305,7 +305,7 @@
 # lst_dims = sorted(lst_dims, key=lambda x: hash(x))
 
 
-#zadaniye 3.7.3
+# zadaniye 3.7.3
 # class Player:
 #     def __init__(self, name, old, score):
 #         self.name = name
@@ -323,7 +323,7 @@
 # players_filtered = list(filter(bool, players))
 
 
-#zadaniye 3.8.2
+# zadaniye 3.8.2
 # class Record:
 #     def __init__(self, **kwargs):
 #         self.__dict__.update(kwargs)
@@ -410,8 +410,7 @@
 #     print(v)
 
 
-
-#zadaniye 3.9.6
+# zadaniye 3.9.6
 # class TriangleListIterator:
 #     def __init__(self, lst):
 #         self._lst = lst
@@ -422,26 +421,163 @@
 #                 yield self._lst[i][j]
 
 
+#
+# class FRange:
+#     def __init__(self, start=0.0, stop=0.0, step=1.0):
+#         self.start = start
+#         self.stop = stop
+#         self.step = step
+#         self.value = self.start - self.step
+#
+#     def __next__(self):
+#         if self.value + self.step < self.stop:
+#             self.value += self.step
+#             return self.value
+#         else:
+#             raise StopIteration
+#
+#
+# fr = FRange(0, 5, 1)
+# print(fr.__next__())
+# print(fr.__next__())
+# print(fr.__next__())
+# print(fr.__next__())
+# print(fr.__next__())
 
 
-class FRange:
-    def __init__(self, start=0.0, stop=0.0, step=1.0):
-        self.start = start
-        self.stop = stop
-        self.step = step
-        self.value = self.start - self.step
+# zadaniye 3.9.10
 
-    def __next__(self):
-        if self.value + self.step < self.stop:
-            self.value += self.step
-            return self.value
-        else:
-            raise StopIteration
+# class IterColum:
+#     def __init__(self, lst, col_indx):
+#         self._lst = lst
+#         self._col_indx = col_indx
+#
+#     def __iter(self):
+#         for row in self._lst:
+#             yield row[self._col_indx]
 
 
-fr = FRange(0, 5, 1)
-print(fr.__next__())
-print(fr.__next__())
-print(fr.__next__())
-print(fr.__next__())
-print(fr.__next__())
+# zadaniye 3.9.13
+
+# class StackObj:
+#     def __init__(self, data):
+#         self.data = data
+#         self.next = None
+#
+#     def __repr__(self):
+#         return str(self.data)
+#
+#
+# class Stack:
+#     def __init__(self):
+#         self.top = None
+#         self.__last = None
+#
+#     def push_back(self, obj):
+#         if self.top is None:
+#             self.top = obj
+#         else:
+#             self.__last.next = obj
+#         self.__last = obj
+#
+#     def push_front(self, obj):
+#         if self.top is None:
+#             self.__last = self.top = obj
+#         else:
+#             obj.next = self.top
+#             self.top = obj
+#
+#     def __iter__(self):
+#         h = self.top
+#         while h:
+#             yield h
+#             h = h.next
+#
+#     def __len__(self):
+#         return sum(1 for _ in self)
+#
+#     def _get_obj(self, indx):
+#         if type(indx) != int or not (0 <= indx < len(self)):
+#             raise IndexError('неверный индекс')
+#         for i, obj in enumerate(self):
+#             if i == indx:
+#                 return obj
+#
+#     def __getitem__(self, item):
+#         return self._get_obj(item).data
+#
+#     def __setitem__(self, key, value):
+#         self._get_obj(key).data = value
+
+
+# zadaniye 4.1.1
+# class Animal:
+#     def __init__(self, name, old):
+#         self.name = name
+#         self.old = old
+#
+#
+# class Cat(Animal):
+#     def __init__(self, name, old, color, weight):
+#         super().__init__(name, old)
+#         self.color = color
+#         self.weight = weight
+#
+#     def get_info(self):
+#         out = [self.__dict__[i] for i in self.__dict__.keys()]
+#         return f"{out[0]}: {out[1]}, {out[2]}, {out[3]}"
+#
+#
+# class Dog(Animal):
+#     def __init__(self, name, old, breed, size):
+#         super().__init__(name, old)
+#         self.breed = breed
+#         self.size = size
+#
+#     def get_info(self):
+#         out = [self.__dict__[i] for i in self.__dict__.keys()]
+#         return f"{out[0]}: {out[1]}, {out[2]}, {out[3]}"
+
+
+# zadaniye 4.1.5
+class Thing:
+    __id = 0
+
+    def __init__(self, name, price):
+        self.id = self.__get_id()
+        self.name = name
+        self.price = price
+        self.weight = None
+        self.dims = None
+        self.memory = None
+        self.frm = None
+
+    @classmethod
+    def __get_id(cls):
+        Thing.__id += 1
+        return Thing.__id
+
+    def get_data(self):
+        list_tuple = [self.__dict__[i] for i in self.__dict__.keys()]
+        list_tuple = tuple(list_tuple)
+        return list_tuple
+
+
+class Table(Thing):
+    def __init__(self, name, price, weight, dims):
+        super().__init__(name, price)
+        self.weight = weight
+        self.dims = dims
+
+
+class ElBook(Thing):
+    def __init__(self, name, price, memory, frm):
+        super().__init__(name, price)
+        self.memory = memory
+        self.frm = frm
+
+
+table = Table("Круглый", 1024, 812.55, (700, 750, 700))
+book = ElBook("Python ООП", 2000, 2048, 'pdf')
+print(*table.get_data())
+print(*book.get_data())
