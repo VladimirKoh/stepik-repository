@@ -540,44 +540,238 @@
 
 
 # zadaniye 4.1.5
-class Thing:
-    __id = 0
+# class Thing:
+#     __id = 0
+#
+#     def __init__(self, name, price):
+#         self.id = self.__get_id()
+#         self.name = name
+#         self.price = price
+#         self.weight = None
+#         self.dims = None
+#         self.memory = None
+#         self.frm = None
+#
+#     @classmethod
+#     def __get_id(cls):
+#         Thing.__id += 1
+#         return Thing.__id
+#
+#     def get_data(self):
+#         list_tuple = [self.__dict__[i] for i in self.__dict__.keys()]
+#         list_tuple = tuple(list_tuple)
+#         return list_tuple
+#
+#
+# class Table(Thing):
+#     def __init__(self, name, price, weight, dims):
+#         super().__init__(name, price)
+#         self.weight = weight
+#         self.dims = dims
+#
+#
+# class ElBook(Thing):
+#     def __init__(self, name, price, memory, frm):
+#         super().__init__(name, price)
+#         self.memory = memory
+#         self.frm = frm
+#
+#
+# table = Table("Круглый", 1024, 812.55, (700, 750, 700))
+# book = ElBook("Python ООП", 2000, 2048, 'pdf')
+# print(*table.get_data())
+# print(*book.get_data())
 
-    def __init__(self, name, price):
-        self.id = self.__get_id()
-        self.name = name
-        self.price = price
-        self.weight = None
-        self.dims = None
-        self.memory = None
-        self.frm = None
 
-    @classmethod
-    def __get_id(cls):
-        Thing.__id += 1
-        return Thing.__id
+# zadaniye 4.1.6
+# class GenericView:
+#     def __init__(self, methods=('GET',)):
+#         self.methods = methods
+#
+#     def get(self, request):
+#         return ""
+#
+#     def post(self, request):
+#         pass
+#
+#     def put(self, request):
+#         pass
+#
+#     def delete(self, request):
+#         pass
+#
+#
+# class DetailView(GenericView):
+#     def render_request(self, request, method):
+#         if method.upper() not in self.methods:
+#             raise TypeError('данный запрос не может быть выполнен')
+#         if getattr(self, method.lower(), False):
+#             return getattr(self, method.lower(), False)(request)
+#
+#     def get(self, request):
+#         if type(request) != dict:
+#             raise TypeError('request не является словарем')
+#         if 'url' not in request:
+#             raise TypeError('request не содержит обязательного ключа url')
+#         return f"url: {request['url']}"
+#
+#
+# dv = DetailView()
+# html = dv.render_request({'url': 'https://site.ru/home'}, 'GET')   # url: https://site.ru/home
+# print(html)
 
-    def get_data(self):
-        list_tuple = [self.__dict__[i] for i in self.__dict__.keys()]
-        list_tuple = tuple(list_tuple)
-        return list_tuple
+
+# zadaniye 4.1.7
+# class Singleton:
+#     __obj = None
+#     __obj_base = None
+#
+#     def __new__(cls, *args, **kwargs):
+#         if cls == Singleton:
+#             if cls.__obj_base is None:
+#                 cls.__obj_base = object.__new__(cls)
+#             return cls.__obj_base
+#
+#         if cls.__obj is None:
+#             cls.__obj = super().__new__(cls)
+#         return cls.__obj
+#
+#
+# class Game(Singleton):
+#     def __init__(self, name):
+#         if 'name' not in self.__dict__:
+#             self.name = name
+#
+#
+# g = Game("game")
+# g1 = Game('game1')
 
 
-class Table(Thing):
-    def __init__(self, name, price, weight, dims):
-        super().__init__(name, price)
-        self.weight = weight
-        self.dims = dims
 
 
-class ElBook(Thing):
-    def __init__(self, name, price, memory, frm):
-        super().__init__(name, price)
-        self.memory = memory
-        self.frm = frm
+#zadaniye 4.1.8
+# class Validator:
+#     def _is_valid(self, data):
+#         return True
+#
+#     def __call__(self, data):
+#         if not self._is_valid(data):
+#             raise ValueError('данные не прошли валидацию')
+#
+#
+# class IntegerValidator(Validator):
+#     def __init__(self, min_value, max_value):
+#         self.min_value = min_value
+#         self.max_value = max_value
+#
+#     def _is_valid(self, data):
+#         return type(data) == int and self.min_value <= data <= self.max_value
+#
+#
+# class FloatValidator(Validator):
+#     def __init__(self, min_value, max_value):
+#         self.min_value = min_value
+#         self.max_value = max_value
+#
+#     def _is_valid(self, data):
+#         return type(data) == float and self.min_value <= data <= self.max_value
+#
+#
+# integer_validator = IntegerValidator(-10, 10)
+# float_validator = FloatValidator(-1, 1)
+# res1 = integer_validator(10)  # исключение не генерируется (проверка проходит)
+# res2 = float_validator(0.2)    # исключение ValueError
+# print(res2, res1)
 
 
-table = Table("Круглый", 1024, 812.55, (700, 750, 700))
-book = ElBook("Python ООП", 2000, 2048, 'pdf')
-print(*table.get_data())
-print(*book.get_data())
+#zadaniye 4.1.9
+# class Layer:
+#     def __init__(self, name='Layer'):
+#         self.next_layer = None
+#         self.name = name
+#
+#     def __call__(self, layer):
+#         self.next_layer = layer
+#         return layer
+#
+#
+# class Input(Layer):
+#     def __init__(self, inputs):
+#         self.inputs = inputs
+#         super().__init__(name='Input')
+#
+#
+# class Dense(Layer):
+#     def __init__(self, inputs, outputs, activation):
+#         self.inputs = inputs
+#         self.outputs = outputs
+#         self.activation = activation
+#         super().__init__(name='Dense')
+#
+#
+# class NetworkIterator:
+#     def __init__(self, network):
+#         self.network = network
+#
+#     def __iter__(self):
+#         while self.network:
+#             yield self.network
+#             self.network = self.network.next_layer
+
+
+#zadaniye 4.1.10
+
+
+class Vector:
+    _all_type = (int, float)
+
+    def __init__(self, *args):
+        self.__check_args(args)
+        self._args = args
+
+    def __check_args(self, args):
+        if not all(type(x) in self._all_type for x in args):
+            raise ValueError('неверный тип координат')
+
+    def __len__(self):
+        return len(self._args)
+
+    def __make_vector(self, args):
+        try:
+            return self.__class__(*args)
+        except ValueError:
+            return __class__(*args)
+
+    def __add__(self, other):
+        if len(self) == len(other):
+            args = tuple(a + b for a, b in zip(self._args, other.get_coords()))
+            return self.__make_vector(args)
+        else:
+            raise TypeError('размерности векторов не совпадают')
+
+    def __sub__(self, other):
+        if len(self) == len(other):
+            args = tuple(a - b for a, b in zip(self._args, other.get_coords()))
+            return self.__make_vector(args)
+        else:
+            raise TypeError('размерности векторов не совпадают')
+
+    def get_coords(self):
+        return tuple(self._args)
+
+
+class VectorInt(Vector):
+    _all_type = (int,)
+
+
+
+
+
+v1 = Vector(1, 2, 3)
+v2 = Vector(3, 4, 5)
+v = v1 + v2 # формируется новый вектор (объект класса Vector) с соответствующими координатами
+v = v1 - v2 # формируется новый вектор (объект класса Vector) с соответствующими координатами
+v3 = VectorInt(1, 2, 3, 4)
+v4 = VectorInt(1, 1, 3, 4) # ошибка: генерируется исключение raise ValueError('координаты должны быть целыми числами')
+v = v3 + v4
+print(v)
