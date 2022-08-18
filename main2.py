@@ -911,8 +911,7 @@
 # t = (t + "Python") + "ООП"
 
 
-
-#zadaniye 4.2.7
+# zadaniye 4.2.7
 # class VideoItem:
 #     def __init__(self, title, descr, path):
 #         self.title = title
@@ -944,7 +943,7 @@
 # descr = v.descr
 
 
-#zadaniye 4.2.9
+# zadaniye 4.2.9
 # class IteratorAttrs:
 #     def __iter__(self):
 #         for x in self.__dict__.items():
@@ -963,3 +962,134 @@
 #
 # for attr, value in phone:
 #     print(attr, value)
+
+
+# zadaniye 4.3.4
+# class Thing:
+#     def __init__(self, name, weight):
+#         self.name = name
+#         self.weight = weight
+#
+#
+# class ArtObject(Thing):
+#     def __init__(self, name, weight, author, date):
+#         super().__init__(name, weight)
+#         self.author = author
+#         self.date = date
+#
+#
+# class Computer(Thing):
+#     def __init__(self, name, weight, memory, cpu):
+#         super().__init__(name, weight)
+#         self.memory = memory
+#         self.cpu = cpu
+#
+#
+# class Auto(Thing):
+#     def __init__(self, name, weight, dims):
+#         super().__init__(name, weight)
+#         self.dims = dims
+#
+#
+# class Mercedes(Auto):
+#     def __init__(self, name, weight, dims, model, old):
+#         super().__init__(name, weight, dims)
+#         self.model = model
+#         self.old = old
+#
+#
+# class Toyota(Auto):
+#     def __init__(self, name, weight, dims, model, wheel):
+#         super().__init__(name, weight, dims)
+#         self.model = model
+#         self.wheel = wheel
+
+
+
+#zadaniye 4.3.5
+# class SellItem:
+#     def __init__(self, name, price):
+#         self.name = name
+#         self.price = price
+#
+#
+# class Flat(SellItem):
+#     def __init__(self, name, price, size, rooms):
+#         super().__init__(name, price)
+#         self.size = size
+#         self.rooms = rooms
+#
+#
+# class House(SellItem):
+#     def __init__(self, name, price, material, square):
+#         super().__init__(name, price)
+#         self.material = material
+#         self.square = square
+#
+#
+# class Land(SellItem):
+#     def __init__(self, name, price, square):
+#         super().__init__(name, price)
+#         self.square = square
+#
+#
+# class Agency:
+#     def __init__(self, name):
+#         self.name = name
+#         self.list_agency = []
+#
+#     def add_object(self, obj):
+#         self.list_agency.append(obj)
+#
+#     def remove_object(self, obj):
+#         self.list_agency.remove(obj)
+#
+#     def get_objects(self):
+#         return self.list_agency
+#
+# ag = Agency("Рога и копыта")
+# ag.add_object(Flat("квартира, 3к", 10000000, 121.5, 3))
+# ag.add_object(Flat("квартира, 2к", 8000000, 74.5, 2))
+# ag.add_object(Flat("квартира, 1к", 4000000, 54, 1))
+# ag.add_object(House("дом, крипичный", price=35000000, material="кирпич", square=186.5))
+# ag.add_object(Land("участок под застройку", 3000000, 6.74))
+# for obj in ag.get_objects():
+#     print(obj.name)
+#
+# lst_houses = [x for x in ag.get_objects() if isinstance(x, House)] # выделение списка домов
+
+
+
+#zadaniye 4.3.6
+class Router:
+    app = {}
+
+    @classmethod
+    def get(cls, path):
+        return cls.app.get(path)
+
+    @classmethod
+    def add_callback(cls, path, func):
+        cls.app[path] = func
+
+
+class Callback:
+    def __init__(self, path, router_cls):
+        self.__path = path
+        self.__router_cls = router_cls
+
+    def __call__(self, func):
+        self.__router_cls.add_callback(self.__path, func)
+
+
+@Callback('/', Router)
+def index():
+    return '<h1>Главная</h1>'
+
+
+route = Router.get('/')
+if route:
+    ret = route()
+    print(ret)
+
+#Разобраться с этим заданием!!!!!!!
