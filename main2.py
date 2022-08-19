@@ -1140,16 +1140,74 @@
 
 
 # zadaniye 4.3.8
-class SoftList(list):
+# class SoftList(list):
+#     def __getitem__(self, item):
+#         try:
+#             return super().__getitem__(item)
+#         except IndexError:
+#             return False
+#
+#
+# sl = SoftList("python")
+# sl[0]  # 'p'
+# print(sl[-1])  # 'n'
+# print(sl[6])  # False
+# print(sl[-7])  # False
+
+
+
+#zadaniye 4.3.9
+# import string
+#
+#
+# class StringDigit(str):
+#     def __init__(self, string_d):
+#         self.__check_string(string_d)
+#         super().__init__()
+#
+#     @staticmethod
+#     def __check_string(value):
+#         if not all(x in string.digits for x in value):
+#             raise ValueError("в строке должны быть только цифры")
+#
+#     def __add__(self, other):
+#         self.__check_string(other)
+#         return __class__(super().__add__(other))
+#
+#     def __radd__(self, other):
+#         self.__check_string(other)
+#
+#         return __class__(other).__add__(self)
+#
+#
+# sd = StringDigit("123")
+# print(sd)       # 123
+# sd = sd + "456" # StringDigit: 123456
+# print(sd)
+# sd = "789" + sd # StringDigit: 789123456
+# print(sd)
+# sd = sd + "12f" # ValueError
+# print(sd)
+
+
+#zadaniye 4.3.11
+class ItemAttrs:
     def __getitem__(self, item):
-        try:
-            return super().__getitem__(item)
-        except IndexError:
-            return False
+        return self.coords[item]
+
+    def __setitem__(self, key, value):
+        self.coords[key] = value
 
 
-sl = SoftList("python")
-sl[0]  # 'p'
-print(sl[-1])  # 'n'
-print(sl[6])  # False
-print(sl[-7])  # False
+class Point(ItemAttrs):
+    def __init__(self, x, y):
+        self.coords = [x, y]
+
+
+pt = Point(1, 2.5)
+x = pt[0]   # 1
+print(x)
+y = pt[1]   # 2.5
+print(y)
+pt[0] = 10
+print(pt.coords)
