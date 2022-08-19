@@ -1005,8 +1005,7 @@
 #         self.wheel = wheel
 
 
-
-#zadaniye 4.3.5
+# zadaniye 4.3.5
 # class SellItem:
 #     def __init__(self, name, price):
 #         self.name = name
@@ -1059,37 +1058,98 @@
 # lst_houses = [x for x in ag.get_objects() if isinstance(x, House)] # выделение списка домов
 
 
+# zadaniye 4.3.6
+# class Router:
+#     app = {}
+#
+#     @classmethod
+#     def get(cls, path):
+#         return cls.app.get(path)
+#
+#     @classmethod
+#     def add_callback(cls, path, func):
+#         cls.app[path] = func
+#
+#
+# class Callback:
+#     def __init__(self, path, router_cls):
+#         self.__path = path
+#         self.__router_cls = router_cls
+#
+#     def __call__(self, func):
+#         self.__router_cls.add_callback(self.__path, func)
+#
+#
+# @Callback('/', Router)
+# def index():
+#     return '<h1>Главная</h1>'
+#
+#
+# route = Router.get('/')
+# if route:
+#     ret = route()
+#     print(ret)
 
-#zadaniye 4.3.6
-class Router:
-    app = {}
-
-    @classmethod
-    def get(cls, path):
-        return cls.app.get(path)
-
-    @classmethod
-    def add_callback(cls, path, func):
-        cls.app[path] = func
+# Разобраться с этим заданием!!!!!!!
 
 
-class Callback:
-    def __init__(self, path, router_cls):
-        self.__path = path
-        self.__router_cls = router_cls
+# zadaniye 4.3.7
+# def integer_params_decorated(func):
+#     print(f'func-----{func}')
+#     def wrapper(self, *args, **kwargs):
+#         if not all(type(x) == int for x in args):
+#             raise TypeError("аргументы должны быть целыми числами")
+#         if not all(type(x) == int for x in kwargs.values()):
+#             raise TypeError("аргументы должны быть целыми числами")
+#         return func(self, *args, **kwargs)
+#     return wrapper
+#
+# def integer_params(cls):
+#     methods = {k: v for k, v in cls.__dict__.items() if callable(v)}
+#     print(f'cls.__dict__{cls.__dict__}')
+#     print(methods)
+#     for k, v in methods.items():
+#         print(f'key ----{k}', f'value -----{v}')
+#         setattr(cls, k, integer_params_decorated(v))
+#
+#     return cls
+#
+#
+# @integer_params
+# class Vector:
+#     def __init__(self, *args):
+#         self.__coords = list(args)
+#
+#     def __getitem__(self, item):
+#         return self.__coords[item]
+#
+#     def __setitem__(self, key, value):
+#         self.__coords[key] = value
+#
+#     def set_coords(self, *coords, reverse=False):
+#         c = list(coords)
+#         self.__coords = c if not reverse else c[::-1]
+#
+#     def get_coords(self):
+#         return self.__coords
+#
+#
+# vector = Vector(1, 2)
+# print(vector[1])
+# Важное задание обязательно его нужно разобрать!!!
 
-    def __call__(self, func):
-        self.__router_cls.add_callback(self.__path, func)
+
+# zadaniye 4.3.8
+class SoftList(list):
+    def __getitem__(self, item):
+        try:
+            return super().__getitem__(item)
+        except IndexError:
+            return False
 
 
-@Callback('/', Router)
-def index():
-    return '<h1>Главная</h1>'
-
-
-route = Router.get('/')
-if route:
-    ret = route()
-    print(ret)
-
-#Разобраться с этим заданием!!!!!!!
+sl = SoftList("python")
+sl[0]  # 'p'
+print(sl[-1])  # 'n'
+print(sl[6])  # False
+print(sl[-7])  # False
