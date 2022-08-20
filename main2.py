@@ -1190,24 +1190,65 @@
 # print(sd)
 
 
-#zadaniye 4.3.11
-class ItemAttrs:
-    def __getitem__(self, item):
-        return self.coords[item]
+# #zadaniye 4.3.11
+# class ItemAttrs:
+#     def __getitem__(self, item):
+#         return self.coords[item]
+#
+#     def __setitem__(self, key, value):
+#         self.coords[key] = value
+#
+#
+# class Point(ItemAttrs):
+#     def __init__(self, x, y):
+#         self.coords = [x, y]
+#
+#
+# pt = Point(1, 2.5)
+# x = pt[0]   # 1
+# print(x)
+# y = pt[1]   # 2.5
+# print(y)
+# pt[0] = 10
+# print(pt.coords)
 
-    def __setitem__(self, key, value):
-        self.coords[key] = value
+# class Animal:
+#     def __init__(self, name, kind, old):
+#         self.__name = name
+#         self.__kind = kind
+#         self.__old = old
+#
+#     @property
+#     def name(self):
+#         return self.__name
+#
+#     @name.setter
+#     def name(self, value):
+#         self.__name = value
+#
+#     @property
+#     def kind(self):
+#         return self.__kind
+#
+#     @kind.setter
+#     def kind(self, value):
+#         self.__kind = value
+#
+#     @property
+#     def old(self):
+#         return self.__old
+#
+#     @old.setter
+#     def old(self, value):
+#         self.__old = value
+#
+#
+# s = """Васька; дворовый кот; 5
+# Рекс; немецкая овчарка; 8
+# Кеша; попугай; 3"""
+#
+# animals = [Animal(*line.split('; ')) for line in s.splitlines()]
+# print(animals)
 
 
-class Point(ItemAttrs):
-    def __init__(self, x, y):
-        self.coords = [x, y]
-
-
-pt = Point(1, 2.5)
-x = pt[0]   # 1
-print(x)
-y = pt[1]   # 2.5
-print(y)
-pt[0] = 10
-print(pt.coords)
+#решить данное задание через дескрипторы #ПЕРЕРЕШАТЬ
