@@ -1252,3 +1252,209 @@
 
 
 #решить данное задание через дескрипторы #ПЕРЕРЕШАТЬ
+# class Furniture:
+#     def __init__(self, name, weight):
+#         self.__verify_name(name)
+#         self._name = name
+#         self.__verify_weight(weight)
+#         self._weight = weight
+#
+#     def __setattr__(self, key, value):
+#         # print(f"__setattr__{self}")
+#         if key == 'name':
+#             self.__verify_name(value)
+#         if key == 'weight':
+#             self.__verify_weight(value)
+#         object.__setattr__(self, key, value)
+#
+#     def __verify_name(self, value):
+#         if type(value) != str:
+#             raise TypeError('название должно быть строкой')
+#
+#     def __verify_weight(self, value):
+#         if not isinstance(value, (int, float)) or not value > 0:
+#             raise TypeError('вес должен быть положительным числом')
+#
+#
+# class Closet(Furniture):
+#     def __init__(self, name, weight, tp, doors):
+#         super().__init__(name, weight)
+#         self._tp = tp
+#         self._doors = doors
+#
+#     def get_attrs(self) -> tuple:
+#         return tuple(self.__dict__.values())
+#
+#
+# class Chair(Furniture):
+#     def __init__(self, name, weight, height):
+#         super().__init__(name, weight)
+#         self._height = height
+#
+#     def get_attrs(self) -> tuple:
+#         return tuple(self.__dict__.values())
+#
+#
+# class Table(Furniture):
+#     def __init__(self, name, weight, height, square):
+#         super().__init__(name, weight)
+#         self._height = height
+#         self._square = square
+#
+#     def get_attrs(self) -> tuple:
+#         return tuple(self.__dict__.values())
+#
+# cl = Closet('шкаф-купе', 342.56, True, 3)
+# chair = Chair('стул', 14, 55.6)
+# tb = Table('стол', 4, 75, 10)
+# print(tb.get_attrs())
+
+
+#zadaniye 4.4.7
+# class Observer:
+#     def update(self, data):
+#         pass
+#
+#     def __hash__(self):
+#         return hash(id(self))
+#
+#
+# class Subject:
+#     def __init__(self):
+#         self.__observers = {}
+#         self.__data = None
+#
+#     def add_observer(self, observer):
+#         self.__observers[observer] = observer
+#
+#     def remove_observer(self, observer):
+#         if observer in self.__observers:
+#             self.__observers.pop(observer)
+#
+#     def __notify_observer(self):
+#         for ob in self.__observers:
+#             ob.update(self.__data)
+#
+#     def change_data(self, data):
+#         self.__data = data
+#         self.__notify_observer()
+#
+#
+# class Data:
+#     def __init__(self, temp, press, wet):
+#         self.temp = temp    # температура
+#         self.press = press  # давление
+#         self.wet = wet      # влажность
+#
+#
+# class TemperatureView(Observer):
+#     def update(self, data):
+#         if data:
+#             print(f'Текущая температура {data.temp}')
+#
+#
+# class PressureView(Observer):
+#     def update(self, data):
+#         if data:
+#             print(f'Текущее давление {data.press}')
+#
+#
+# class WetView(Observer):
+#     def update(self, data):
+#         if data:
+#             print(f'Текущая влажность {data.wet}')
+#
+# subject = Subject()
+# tv = TemperatureView()
+# pr = PressureView()
+# wet = WetView()
+#
+# subject.add_observer(tv)
+# subject.add_observer(pr)
+# subject.add_observer(wet)
+# subject.change_data(Data(23, 150, 83))
+# subject.remove_observer(wet)
+# subject.change_data(Data(24, 148, 80))
+#ВАЖНОЕ ЗАДАНИЕ!!! РАЗОБРАТЬСЯ #ВАЖНОЕ
+
+
+
+#zadaniye 4.4.8
+# class Aircraft:
+#     def __init__(self, model, mass, speed, top):
+#         self._model = model
+#         self._mass = mass
+#         self._speed = speed
+#         self._top = top
+#
+#     def __setattr__(self, key, value):
+#         if key == "_model" and type(value) != str:
+#             raise TypeError('неверный тип аргумента')
+#         if key == "_mass" or key == "_speed" or key == "_top":
+#             if not isinstance(value, (int, float)) or value < 0:
+#                 raise TypeError('неверный тип аргумента')
+#         object.__setattr__(self, key, value)
+#
+#
+# class PassengerAircraft(Aircraft):
+#     def __init__(self, model, mass, speed, top, chairs):
+#         super().__init__(model, mass, speed, top)
+#         if type(chairs) != int:
+#             raise TypeError('неверный тип аргумента')
+#         self._chairs = chairs
+#
+#
+# class WarPlane(Aircraft):
+#     def __init__(self, model, mass, speed, top, weapons):
+#         super().__init__(model, mass, speed, top)
+#         if type(weapons) != dict:
+#             raise TypeError('неверный тип аргумента')
+#         self._weapons = weapons
+#
+#
+# planes = [PassengerAircraft('МС-21', 1250, 8000, 12000.5, 140),
+#           PassengerAircraft('SuperJet', 1145, 8640, 11034, 80),
+#           WarPlane('Миг-35', 7034, 25000, 2000, {"ракета": 4, "бомба": 10}),
+#           WarPlane('Су-35', 7034, 34000, 2400, {"ракета": 4, "бомба": 7})]
+#
+#
+# print(planes[0].__dict__)
+
+
+
+
+#zadaniye 4.4.9
+def class_log(log_lst):
+    def log_method(cls):
+        methods = {k: v for k, v in cls.__dict__.items() if callable(v)}
+        for k, v in methods.items():
+            setattr(cls, k, log_method_decorator(v))
+
+        return cls
+
+    def log_method_decorator(func):
+        def wrapper(*args, **kwargs):
+            log_lst.append(func.__name__)
+            return func(*args, **kwargs)
+        return wrapper
+    return log_method
+
+
+
+vector_log = []
+
+@class_log(vector_log)
+class Vector:
+    def __init__(self, *args):
+        self.__coords = list(args)
+
+    def __getitem__(self, item):
+        return self.__coords[item]
+
+    def __setitem__(self, key, value):
+        self.__coords[key] = value
+
+
+v = Vector(1, 2, 3)
+v[0] = 10
+print(vector_log)
