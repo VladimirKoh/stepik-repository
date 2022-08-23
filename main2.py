@@ -1155,8 +1155,7 @@
 # print(sl[-7])  # False
 
 
-
-#zadaniye 4.3.9
+# zadaniye 4.3.9
 # import string
 #
 #
@@ -1251,7 +1250,7 @@
 # print(animals)
 
 
-#решить данное задание через дескрипторы #ПЕРЕРЕШАТЬ
+# решить данное задание через дескрипторы #ПЕРЕРЕШАТЬ
 # class Furniture:
 #     def __init__(self, name, weight):
 #         self.__verify_name(name)
@@ -1310,7 +1309,7 @@
 # print(tb.get_attrs())
 
 
-#zadaniye 4.4.7
+# zadaniye 4.4.7
 # class Observer:
 #     def update(self, data):
 #         pass
@@ -1375,11 +1374,10 @@
 # subject.change_data(Data(23, 150, 83))
 # subject.remove_observer(wet)
 # subject.change_data(Data(24, 148, 80))
-#ВАЖНОЕ ЗАДАНИЕ!!! РАЗОБРАТЬСЯ #ВАЖНОЕ
+# ВАЖНОЕ ЗАДАНИЕ!!! РАЗОБРАТЬСЯ #ВАЖНОЕ
 
 
-
-#zadaniye 4.4.8
+# zadaniye 4.4.8
 # class Aircraft:
 #     def __init__(self, model, mass, speed, top):
 #         self._model = model
@@ -1421,40 +1419,420 @@
 # print(planes[0].__dict__)
 
 
+# zadaniye 4.4.9
+# def class_log(log_lst):
+#     def log_method(cls):
+#         methods = {k: v for k, v in cls.__dict__.items() if callable(v)}
+#         for k, v in methods.items():
+#             setattr(cls, k, log_method_decorator(v))
+#
+#         return cls
+#
+#     def log_method_decorator(func):
+#         def wrapper(*args, **kwargs):
+#             log_lst.append(func.__name__)
+#             return func(*args, **kwargs)
+#         return wrapper
+#     return log_method
+#
+#
+#
+# vector_log = []
+#
+# @class_log(vector_log)
+# class Vector:
+#     def __init__(self, *args):
+#         self.__coords = list(args)
+#
+#     def __getitem__(self, item):
+#         return self.__coords[item]
+#
+#     def __setitem__(self, key, value):
+#         self.__coords[key] = value
+#
+#
+# v = Vector(1, 2, 3)
+# v[0] = 10
+# print(vector_log)
+
+# CURRENT_OS = 'windows'   # 'windows', 'linux'
+#
+#
+# class WindowsFileDialog:
+#     def __init__(self, title, path, exts):
+#         self.__title = title # заголовок диалогового окна
+#         self.__path = path  # начальный каталог с файлами
+#         self.__exts = exts  # кортеж из отображаемых расширений файлов
+#
+#
+# class LinuxFileDialog:
+#     def __init__(self, title, path, exts):
+#         self.__title = title # заголовок диалогового окна
+#         self.__path = path  # начальный каталог с файлами
+#         self.__exts = exts  # кортеж из отображаемых расширений файлов
+#
+#
+# class FileDialogFactory:
+#     def __new__(cls, *args, **kwargs):
+#         if CURRENT_OS == 'windows':
+#             return FileDialogFactory.create_windows_filedialog(args[0], args[1], args[2])
+#         else:
+#             return FileDialogFactory.create_linux_filedialog(args[0], args[1], args[2])
+#
+#     @classmethod
+#     def create_windows_filedialog(cls, title, path, exts):
+#         return WindowsFileDialog(title, path, exts)
+#
+#     @classmethod
+#     def create_linux_filedialog(cls, title, path, exts):
+#         return LinuxFileDialog(title, path, exts)
+# dlg = FileDialogFactory('Изображения', 'd:/images/', ('jpg', 'gif', 'bmp', 'png'))
 
 
-#zadaniye 4.4.9
-def class_log(log_lst):
-    def log_method(cls):
-        methods = {k: v for k, v in cls.__dict__.items() if callable(v)}
-        for k, v in methods.items():
-            setattr(cls, k, log_method_decorator(v))
+# zadaniye 4.5.3
+# class Student:
+#     def __init__(self, fio, group):
+#         self._fio = fio
+#         self._group = group
+#         self._lect_marks = []  # оценки за лекции
+#         self._house_marks = []  # оценки за домашние задания
+#
+#     def add_lect_marks(self, mark):
+#         self._lect_marks.append(mark)
+#
+#     def add_house_marks(self, mark):
+#         self._house_marks.append(mark)
+#
+#     def __str__(self):
+#         return f"Студент {self._fio}: оценки на лекциях: {str(self._lect_marks)}; оценки за д/з: {str(self._house_marks)}"
+#
+#
+# class Mentor:
+#     def __init__(self, fio, subject):
+#         self._fio = fio
+#         self._subject = subject
+#
+#
+# class Lector(Mentor):
+#     def set_mark(self, student, mark):
+#         Student.add_lect_marks(student, mark)
+#
+#     def __str__(self):
+#         return f"Лектор {self._fio}: предмет {self._subject}"
+#
+#
+# class Reviewer(Mentor):
+#     def set_mark(self, student, mark):
+#         Student.add_house_marks(student, mark)
+#
+#     def __str__(self):
+#         return f"Эксперт {self._fio}: предмет {self._subject}"
+#
+#
+# lector = Lector("Балакирев С.М.", "Информатика")
+# reviewer = Reviewer("Гейтс Б.", "Информатика")
+# students = [Student("Иванов А.Б.", "ЭВМд-11"), Student("Гаврилов С.А.", "ЭВМд-11")]
+# persons = [lector, reviewer]
+# lector.set_mark(students[0], 4)
+# lector.set_mark(students[1], 2)
+# reviewer.set_mark(students[0], 5)
+# reviewer.set_mark(students[1], 3)
+# for p in persons + students:
+#     print(p)
+# # в консоли будет отображено:
+# # Лектор Балакирев С.М.: предмет Информатика
+# # Эксперт Гейтс Б.: предмет Информатика
+# # Студент Иванов А.Б.: оценки на лекциях: [4]; оценки за д/з: [5]
+# # Студент Гаврилов С.А.: оценки на лекциях: [2]; оценки за д/з: [3]
 
-        return cls
 
-    def log_method_decorator(func):
-        def wrapper(*args, **kwargs):
-            log_lst.append(func.__name__)
-            return func(*args, **kwargs)
-        return wrapper
-    return log_method
-
-
-
-vector_log = []
-
-@class_log(vector_log)
-class Vector:
-    def __init__(self, *args):
-        self.__coords = list(args)
-
-    def __getitem__(self, item):
-        return self.__coords[item]
-
-    def __setitem__(self, key, value):
-        self.__coords[key] = value
+# zadaniye 4.5.4
+# class ShopInterface:
+#     def get_id(self):
+#         raise NotImplementedError('в классе не переопределен метод get_id')
+#
+#
+# class ShopItem(ShopInterface):
+#     def __init__(self, name, weight, price):
+#         self._name = name
+#         self._weight = weight
+#         self._price = price
+#         self.__id = hash((self._name, self._weight, self._price))
+#
+#     def get_id(self):
+#         return self.__id
+#
+# item1 = ShopItem("имя1", "вес1", "100")
+# item2 = ShopItem("имя1", "вес1", "100")
+# print(item1.get_id())
+# print(item2.get_id())
 
 
-v = Vector(1, 2, 3)
-v[0] = 10
-print(vector_log)
+# zadaniye 4.5.5
+# class Validator:
+#     def _is_valid(self, data):
+#         raise NotImplementedError('в классе не переопределен метод _is_valid')
+#
+#     def __call__(self, data):
+#         return self._is_valid(data)
+#
+#
+# class FloatValidator(Validator):
+#     def __init__(self, min_value, max_value):
+#         self.min_value = min_value
+#         self.max_value = max_value
+#
+#     def _is_valid(self, data):
+#         return type(data) == float and self.min_value <= data <= self.max_value
+#
+#
+# float_validator = FloatValidator(0, 10.5)
+# res_1 = float_validator(10)  # False (целое число, а не вещественное)
+# res_2 = float_validator(1.0)  # True
+# res_3 = float_validator(-1.0)  # False (выход за диапазон [0; 10.5])
+# print(res_1)
+# print(res_2)
+# print(res_3)
+
+
+# zadaniye 4.5.6
+# from abc import ABC, abstractmethod
+#
+#
+# class Model(ABC):
+#     @abstractmethod
+#     def get_pk(self):
+#         pass
+#
+#     def get_info(self):
+#         return f"Базовый класс Model"
+#
+#
+# class ModelForm(Model):
+#     __last_id = 1
+#     def __init__(self, login, password):
+#         self._login = login
+#         self._password = password
+#         self._id = self.__last_id
+#         type(self).__last_id += 1
+#
+#     def get_pk(self):
+#         return self._id
+#
+#
+# form = ModelForm("Логин", "Пароль")
+# print(form.get_pk())
+
+
+# zadaniye 4.5.7
+# from abc import ABC, abstractmethod
+#
+#
+# class StackInterface(ABC):
+#     @abstractmethod
+#     def push_back(self, obj):
+#         pass
+#
+#     @abstractmethod
+#     def pop_back(self):
+#         pass
+#
+#
+# class Stack(StackInterface):
+#     def __init__(self):
+#         self._top = None
+#         self.__last = None
+#
+#     def push_back(self, obj):
+#         if self.__last:
+#             self.__last.next = obj
+#         self.__last = obj
+#
+#         if self._top is None:
+#             self._top = obj
+#
+#     def pop_back(self):
+#         h = self._top
+#         if h is None:
+#             return
+#         last_obj = self.__last
+#         while h.next and h.next != self.__last:
+#             h = h.next
+#
+#         if self._top == self.__last:
+#             self._top = self.__last = None
+#         else:
+#             h.next = None
+#             self.__last = h
+#         return last_obj
+#
+#
+# class StackObj:
+#     def __init__(self, data):
+#         self._data = data
+#         self._next = None
+#
+#     @property
+#     def data(self):
+#         return self._data
+#
+#     @property
+#     def next(self):
+#         return self._next
+#
+#     @next.setter
+#     def next(self, obj):
+#         self._next = obj
+#
+#
+# st = Stack()
+# st.push_back(StackObj("obj 1"))
+# obj = StackObj("obj 2")
+# st.push_back(obj)
+# del_obj = st.pop_back() # del_obj - ссылка на удаленный объект (если объектов не было, то del_obj = None)
+# print(del_obj)
+
+
+# zadaniye 4.5.8
+# from abc import ABC, abstractmethod
+#
+#
+# class CountryInterface(ABC):
+#     @property
+#     @abstractmethod
+#     def name(self):
+#         pass
+#
+#     @property
+#     @abstractmethod
+#     def population(self):
+#         pass
+#
+#     @property
+#     @abstractmethod
+#     def square(self):
+#         pass
+#
+#     @abstractmethod
+#     def get_info(self):
+#         pass
+#
+#
+# class Country(CountryInterface):
+#     def __init__(self, name, population, square):
+#         self._name = name
+#         self._population = population
+#         self._square = square
+#
+#     @property
+#     def name(self):
+#         return self._name
+#
+#     @name.setter
+#     def name(self, value):
+#         self._name = value
+#
+#     @property
+#     def population(self):
+#         return self._population
+#
+#     @population.setter
+#     def population(self, value):
+#         self._population = value
+#
+#     @property
+#     def square(self):
+#         return self._square
+#
+#     @square.setter
+#     def square(self, value):
+#         self._square = value
+#
+#     def get_info(self):
+#         return f"{self._name}: {self._square}, {self._population}"
+#
+#
+# country = Country("Россия", 140000000, 324005489.55)
+# name = country.name
+# pop = country.population
+# print(name)
+# print(pop)
+# country.population = 150000000
+# country.square = 354005483.0
+# print(country.get_info()) # Россия: 354005483.0, 150000000
+
+# class Track:
+#     def __init__(self, *args):
+#         self.__points = []
+#         if len(args) == 2 and isinstance(args[0], (int, float)) and isinstance(args[1], (int, float)):
+#             self.__points.append(PointTrack(args[0], args[1]))
+#         else:
+#             for i in args:
+#                 self.__points.append(i)
+#
+#     def add_back(self, pt):
+#         self.__points.append(pt)
+#
+#     def add_front(self, pt):
+#         self.__points.insert(0, pt)
+#
+#     def pop_back(self):
+#         self.__points.pop(-1)
+#
+#     def pop_front(self):
+#         self.__points.pop(0)
+#
+#     @property
+#     def points(self):
+#         return tuple(self.__points)
+#
+#
+# class PointTrack:
+#     def __init__(self, x, y):
+#         if type(x) not in (int, float) or type(y) not in (int, float):
+#             raise TypeError('координаты должны быть числами')
+#         self.x = x
+#         self.y = y
+#
+#     def __str__(self):
+#         return f"PointTrack: {self.x}, {self.y}"
+#
+#
+# tr = Track(PointTrack('0', 0), PointTrack(1.2, -0.5), PointTrack(2.4, -1.5))
+# tr.add_back(PointTrack(1.4, 0))
+# tr.pop_front()
+# for pt in tr.points:
+#     print(pt)
+
+
+#zadaniye 4.5.10
+
+# class Food:
+#     def __init__(self, name, weight, calories):
+#         self._name = name
+#         self._weight = weight
+#         self._calories = calories
+#
+#
+# class BreadFood(Food):
+#     def __init__(self, name, weight, calories, white):
+#         super().__init__(name, weight, calories)
+#         self._white = white
+#
+#
+# class SoupFood(Food):
+#     def __init__(self, name, weight, calories, dietary):
+#         super().__init__(name, weight, calories)
+#         self._dietary = dietary
+#
+#
+# class FishFood(Food):
+#     def __init__(self, name, weight, calories, fish):
+#         super().__init__(name, weight, calories)
+#         self._fish = fish
+#
+#
+# bf = BreadFood("Бородинский хлеб", 34.5, 512, False)
+# sf = SoupFood("Черепаший суп", 520, 890.5, False)
+# ff = FishFood("Консерва рыбная", 340, 1200, "семга")
+# print(bf)
