@@ -1055,7 +1055,7 @@
 # for obj in ag.get_objects():
 #     print(obj.name)
 #
-# lst_houses = [x for x in ag.get_objects() if isinstance(x, House)] # выделение списка домов
+
 
 
 # zadaniye 4.3.6
@@ -1805,7 +1805,7 @@
 #     print(pt)
 
 
-#zadaniye 4.5.10
+# zadaniye 4.5.10
 
 # class Food:
 #     def __init__(self, name, weight, calories):
@@ -1836,3 +1836,82 @@
 # sf = SoupFood("Черепаший суп", 520, 890.5, False)
 # ff = FishFood("Консерва рыбная", 340, 1200, "семга")
 # print(bf)
+
+class Digit:
+    def __init__(self, value):
+        self.__check_digit(value)
+        self.value = value
+
+    @staticmethod
+    def __check_digit(value):
+        if type(value) not in (int, float):
+            raise TypeError('значение не соответствует типу объекта')
+
+
+class Integer(Digit):
+    def __init__(self, value):
+        super().__init__(value)
+        self.__check_digit(value)
+        self.value = value
+
+    @staticmethod
+    def __check_digit(value):
+        if type(value) not in (int, ):
+            raise TypeError('значение не соответствует типу объекта')
+
+
+class Float(Digit):
+    def __init__(self, value):
+        super().__init__(value)
+        self.__check_digit(value)
+        self.value = value
+
+    @staticmethod
+    def __check_digit(value):
+        if type(value) not in (float, ):
+            raise TypeError('значение не соответствует типу объекта')
+
+
+class Positive(Digit):
+    def __init__(self, value):
+        super().__init__(value)
+        self.__check_digit(value)
+        self.value = value
+
+    @staticmethod
+    def __check_digit(value):
+        if value < 0:
+            raise TypeError('значение не соответствует типу объекта')
+
+
+class Negative(Digit):
+    def __init__(self, value):
+        super().__init__(value)
+        self.__check_digit(value)
+        self.value = value
+
+    @staticmethod
+    def __check_digit(value):
+        if value > 0:
+            raise TypeError('значение не соответствует типу объекта')
+
+
+class PrimeNumber(Integer, Positive):
+    pass
+
+
+class FloatPositive(Float, Positive):
+    pass
+
+
+
+digits = [PrimeNumber(3), PrimeNumber(1), PrimeNumber(4), FloatPositive(1.5), FloatPositive(9.2), FloatPositive(6.5),
+          FloatPositive(3.5), FloatPositive(8.9)]
+
+
+lst_positive = list(filter(lambda x: isinstance(x, Positive), digits))
+lst_float = list(filter(lambda x: isinstance(x, Float), digits))
+print(lst_float)
+print(lst_positive)
+n = Float(1.0)
+n = FloatPositive(1.0)
