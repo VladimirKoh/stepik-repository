@@ -1057,7 +1057,6 @@
 #
 
 
-
 # zadaniye 4.3.6
 # class Router:
 #     app = {}
@@ -1837,81 +1836,215 @@
 # ff = FishFood("Консерва рыбная", 340, 1200, "семга")
 # print(bf)
 
-class Digit:
-    def __init__(self, value):
-        self.__check_digit(value)
-        self.value = value
+# class Digit:
+#     def __init__(self, value):
+#         self.__check_digit(value)
+#         self.value = value
+#
+#     @staticmethod
+#     def __check_digit(value):
+#         if type(value) not in (int, float):
+#             raise TypeError('значение не соответствует типу объекта')
+#
+#
+# class Integer(Digit):
+#     def __init__(self, value):
+#         super().__init__(value)
+#         self.__check_digit(value)
+#         self.value = value
+#
+#     @staticmethod
+#     def __check_digit(value):
+#         if type(value) not in (int, ):
+#             raise TypeError('значение не соответствует типу объекта')
+#
+#
+# class Float(Digit):
+#     def __init__(self, value):
+#         super().__init__(value)
+#         self.__check_digit(value)
+#         self.value = value
+#
+#     @staticmethod
+#     def __check_digit(value):
+#         if type(value) not in (float, ):
+#             raise TypeError('значение не соответствует типу объекта')
+#
+#
+# class Positive(Digit):
+#     def __init__(self, value):
+#         super().__init__(value)
+#         self.__check_digit(value)
+#         self.value = value
+#
+#     @staticmethod
+#     def __check_digit(value):
+#         if value < 0:
+#             raise TypeError('значение не соответствует типу объекта')
+#
+#
+# class Negative(Digit):
+#     def __init__(self, value):
+#         super().__init__(value)
+#         self.__check_digit(value)
+#         self.value = value
+#
+#     @staticmethod
+#     def __check_digit(value):
+#         if value > 0:
+#             raise TypeError('значение не соответствует типу объекта')
+#
+#
+# class PrimeNumber(Integer, Positive):
+#     pass
+#
+#
+# class FloatPositive(Float, Positive):
+#     pass
+#
+#
+#
+# digits = [PrimeNumber(3), PrimeNumber(1), PrimeNumber(4), FloatPositive(1.5), FloatPositive(9.2), FloatPositive(6.5),
+#           FloatPositive(3.5), FloatPositive(8.9)]
+#
+#
+# lst_positive = list(filter(lambda x: isinstance(x, Positive), digits))
+# lst_float = list(filter(lambda x: isinstance(x, Float), digits))
+# print(lst_float)
+# print(lst_positive)
+# n = Float(1.0)
+# n = FloatPositive(1.0)
 
-    @staticmethod
-    def __check_digit(value):
-        if type(value) not in (int, float):
-            raise TypeError('значение не соответствует типу объекта')
+
+# zadaniye 4.6.5
 
 
-class Integer(Digit):
-    def __init__(self, value):
-        super().__init__(value)
-        self.__check_digit(value)
-        self.value = value
-
-    @staticmethod
-    def __check_digit(value):
-        if type(value) not in (int, ):
-            raise TypeError('значение не соответствует типу объекта')
-
-
-class Float(Digit):
-    def __init__(self, value):
-        super().__init__(value)
-        self.__check_digit(value)
-        self.value = value
-
-    @staticmethod
-    def __check_digit(value):
-        if type(value) not in (float, ):
-            raise TypeError('значение не соответствует типу объекта')
-
-
-class Positive(Digit):
-    def __init__(self, value):
-        super().__init__(value)
-        self.__check_digit(value)
-        self.value = value
-
-    @staticmethod
-    def __check_digit(value):
-        if value < 0:
-            raise TypeError('значение не соответствует типу объекта')
-
-
-class Negative(Digit):
-    def __init__(self, value):
-        super().__init__(value)
-        self.__check_digit(value)
-        self.value = value
-
-    @staticmethod
-    def __check_digit(value):
-        if value > 0:
-            raise TypeError('значение не соответствует типу объекта')
+# class ShopItem:
+#     ID_SHOP_ITEM = 0
+#
+#     def __init__(self):
+#         super().__init__()
+#         ShopItem.ID_SHOP_ITEM += 1
+#         self._id = ShopItem.ID_SHOP_ITEM
+#
+#     def get_pk(self):
+#         return self._id
+#
+#
+# class ShopGenericView:
+#     def __str__(self):
+#         return '\n'.join(f'{k}: {v}' for k,v in self.__dict__.items())
+#
+#
+# class ShopUserView:
+#     def __str__(self):
+#         list_items = []
+#         for k, v in self.__dict__.items():
+#             if k != "_id":
+#                 list_items.append(f'{k}: {v}')
+#         return '\n'.join(list_items)
+#
+#
+# class Book(ShopItem, ShopUserView):
+#     def __init__(self, title, author, year):
+#         super().__init__()
+#         self._title = title
+#         self._author = author
+#         self._year = year
+#
+#
+# book = Book("Python ООП", "Балакирев", 2022)
+# print(book)
 
 
-class PrimeNumber(Integer, Positive):
-    pass
+#zadaniye 4.6.8
+# class RetriveMixin:
+#     def get(self, request):
+#         return "GET: " + request.get('url')
+#
+#
+# class CreateMixin:
+#     def post(self, request):
+#         return "POST: " + request.get('url')
+#
+#
+# class UpdateMixin:
+#     def put(self, request):
+#         return "PUT: " + request.get('url')
+#
+#
+# class GeneralView:
+#     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
+#
+#     def render_request(self, request):
+#         if 'method' in request and 'url' in request:
+#             if not request['method'] in self.allowed_methods:
+#                 raise TypeError(f"Метод {request.get('method')} не разрешен.")
+#             else:
+#                 method_request = request.get('method').lower()
+#                 return self.__getattribute__(method_request)(request)
+#
+#
+#
+# class DetailView(RetriveMixin, UpdateMixin, GeneralView):
+#     allowed_methods = ('GET', 'POST', )
+#
+# view = DetailView()
+# html = view.render_request({'url': 'https://stepik.org/course/116336/', 'method': 'GET'})
+# print(html)   # GET: https://stepik.org/course/116336/
 
-
-class FloatPositive(Float, Positive):
-    pass
-
-
-
-digits = [PrimeNumber(3), PrimeNumber(1), PrimeNumber(4), FloatPositive(1.5), FloatPositive(9.2), FloatPositive(6.5),
-          FloatPositive(3.5), FloatPositive(8.9)]
-
-
-lst_positive = list(filter(lambda x: isinstance(x, Positive), digits))
-lst_float = list(filter(lambda x: isinstance(x, Float), digits))
-print(lst_float)
-print(lst_positive)
-n = Float(1.0)
-n = FloatPositive(1.0)
+#zadaniye 4.6.10
+# class MoneyOperators:
+#     def __add__(self, other):
+#         if type(other) in (int, float):
+#             return self.__class__(self.money + other)
+#
+#         if type(self) != type(other):
+#             raise TypeError('Разные типы объектов')
+#
+#         return self.__class__(self.money + other.money)
+#
+#     def __sub__(self, other):
+#         if type(other) in (int, float):
+#             return self.__class__(self.money - other)
+#
+#         if type(self) != type(other):
+#             raise TypeError('Разные типы объектов')
+#         return self.__class__(self.money - other.money)
+#
+#
+# class Money:
+#     def __init__(self, value):
+#         self.__check_value(value)
+#         self._money = value
+#
+#     @staticmethod
+#     def __check_value(value):
+#         if type(value) not in (int, float):
+#             raise TypeError('сумма должна быть числом')
+#
+#     @property
+#     def money(self):
+#         return self._money
+#
+#     @money.setter
+#     def money(self, value):
+#         self._money = value
+#
+#
+# class MoneyR(Money, MoneyOperators):
+#     def __str__(self):
+#         return f"MoneyR: {self.money}"
+#
+#
+# class MoneyD(Money, MoneyOperators):
+#     def __str__(self):
+#         return f"MoneyD: {self.money}"
+#
+# m1 = MoneyR(1)
+# m2 = MoneyD(2)
+# m = m1 + 10
+# print(m)  # MoneyR: 11
+# m = m1 - 5.4
+# z = m2 - 1
+# print(z)
